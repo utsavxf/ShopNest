@@ -1,0 +1,9 @@
+Bhai in react for displaying images always import them and then in src={}
+
+server side routing me always use a return statement while using response
+
+for checking status in client side use ===
+
+.env file me kuch bhi change nahi karna hai,samjha jaisa hai vaise hi rehne diyo, even one small extra comma will give u error 
+
+whenver you are either saving data into mongodb or deleting it ,don't forget to use await

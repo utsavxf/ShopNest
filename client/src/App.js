@@ -10,6 +10,8 @@ import Cart from './components/cart/Cart';
 import Buynow from './components/buynow/Buynow';
 import { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import Success from './components/Success';
+import Cancel from './components/Cancel';
 
 function App() {
 
@@ -37,6 +39,10 @@ function App() {
                      <Route path='/signup' element={<SignUp />} />
                      <Route path='/getproductsone/:id' element={<Cart />} />
                      <Route path='/buynow' element={<Buynow />} />
+                     <Route path='/success' element={<Success />} />
+                     <Route path='/cancel' element={<Cancel />} />
+                     <Route path='*' element={<Maincomp />} />
+
                   </Routes>
 
                   <Footer />

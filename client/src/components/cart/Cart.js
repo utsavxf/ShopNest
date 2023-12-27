@@ -7,9 +7,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Logincontext } from '../context/ContextProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import {loadStripe} from '@stripe/stripe-js'
 
 const Cart = () => {
+
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scrolls to the top of the page when the component mounts
+    }, []); // Empty dependency array ensures this effect runs only once
 
      
    const {id}=useParams("");    //url se id nikalli
@@ -55,6 +60,14 @@ const Cart = () => {
    //add cart function
    const addtocart = async (id) => {
     // console.log(id);
+     
+    if(!account){
+        toast.error("login first 😃!", {
+            position: "top-center"
+          });
+    }else{
+
+
     const check = await fetch(`/addcart/${id}`, {
         method: "POST",
         headers: {
@@ -80,6 +93,41 @@ const Cart = () => {
         setAccount(data1);
     }
 }
+}
+
+ //make payment for buynow
+ const makePayment = async()=>{
+    if(!account){
+        toast.error("login first 😃!", {
+            position: "top-center"
+          });
+    }else{
+    
+    const stripe = await loadStripe("pk_test_51ORrsYSDu5hfD3NQjTXG8PE0q6Tn8O7eYd7ph7LaRnFAFJjOZQ7caKKbfG2u7iLVARpfpHrGQ4ZLsNX4Pc00eUE200A8tByLtp");
+
+    const body = {
+        products:inddata
+    }
+    const headers = {
+        "Content-Type":"application/json"
+    }
+    const response = await fetch("/create_checkout_session",{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify(body)
+    }); 
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+        sessionId:session.id
+    });
+    
+    if(result.error){
+        console.log(result.error);
+    }
+}
+}
 
 
     return (
@@ -94,7 +142,7 @@ const Cart = () => {
                     <img src={inddata.detailUrl} alt="cart" />
                     <div className="cart_btn">
                         <button className="cart_btn1" onClick={()=>addtocart(inddata.id)}>Add to Cart</button>
-                        <button className="cart_btn2">Buy Now</button>
+                        <button className="cart_btn2" onClick={makePayment}>Buy Now</button>
                     </div>
 
                 </div>

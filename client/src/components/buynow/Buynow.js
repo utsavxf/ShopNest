@@ -2,6 +2,7 @@ import { Divider } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import './buynow.css'
 import Option from './Option';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Subtotal from './Subtotal';
 import Right from './Right';
 // import Empty from './Empty';
@@ -15,7 +16,7 @@ const Buynow = () => {
     const [cartdata, setCartdata] = useState([]);
 
 
-    
+
     const getdatabuy = async () => {
         const res = await fetch("/cartdetails", {
             method: "GET",
@@ -84,8 +85,20 @@ const Buynow = () => {
                         </div>
                         <Right iteam={cartdata} />
                     </div>
-                </div> : <div />
+                </div> :
+
+                (
+                    <div className="empty_cart">
+                        <h1>Your Cart is Empty !</h1>
+                        <p>Explore our products to find what you need</p>
+                        <NavLink to="/">
+                        <button>Explore</button>
+                        </NavLink>
+                    </div>
+                )
+
             }
+
         </>
     )
 }

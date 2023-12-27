@@ -6,6 +6,38 @@
     background-color: #EAEDED!important;
 }
 
+.empty_cart{
+    width: 100%;
+    min-height:50vh;
+    position: relative;
+    top: 60px;
+    background-color: #EAEDED!important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.empty_cart h1{
+    position: relative;
+    top: -82px;
+    font-size: 2.5rem;
+}
+
+.empty_cart p{
+    font-size: 1.3rem;
+    position: relative;
+    top: -38px;
+}
+
+.empty_cart button{
+    font-size: 22px;
+    border-radius: 13px;
+    background-color: blanchedalmond;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
 .buynow_section .buynow_container{  
     margin: 0 auto;
     padding:40px 20px;

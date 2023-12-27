@@ -1,0 +1,64 @@
+->for building frontend we are just making use of material ui and css
+->for building signup forms the field in the useState should be same as name field in the input tags
+
+//backend begins after completin all of the pages frontend,don't re-invent the cycle just copy and past
+
+we are saving products by default in our mongodb .backend se hi taaki real clone ki tarah feel aaye
+
+->you can either use postman or thunder client to check your requests to your database
+
+
+//REDUX ME BASICALLY HUM ek hi state maintain karenge which is array of products
+//we 'll use it manywhere in our app like kahi par kisi ke click par addKarwana hai dispatcher ke through,kahi par get karni hai useSelector ke through (personally i find context provider easier to use) 
+
+
+//REDUX
+sunn bhai ab mere paas ek state hai jisme saare products ki info hogi,right ab vo mujhe apne project me kaafi jagah use karni hai,to ya to mai props paas karta rahu ya ek centralised store banalu ki bhai jisko bhi zarurat hai aao or lejaao, aur usse pehle tujhe to pata hi hai,humne intentionally products ko server me save karaya tha
+->now so getProducts is a function which performs some code and disaptches some arguments to the rdux store which will then based on response recieved update the state(products)
+so i am first using useDispatch in my useEffect hook to hit the function in our store which will then update the state ,and after updating i am retreiving using useSelector hook,right?
+->Yes, you are correct. You are using useDispatch hook to dispatch the getProducts action to the Redux store, which will then fetch the products data and update the state. After the state is updated, you are using the useSelector hook to retrieve the updated products data from the state and use it in your component
+
+
+
+Yes, it is generally recommended to make API calls asynchronously in your app to avoid blocking the main thread and to make your app more responsive. Asynchronous code allows your app to continue running while waiting for a response from the API, which can improve the overall performance and user experience of your app.
+isiliye hum redux thunk ka use kar rahe hai as this time we are using api's in our redux so vo asychronous ho isiliye redux thunk ka use
+
+
+//SO GETTING INDIVIDUAL DATA FROM
+->so what we want now in our app is that as soon as we click on an individual product what will happen is that,first router to direct to a new url on which we will be shown the cart page and usi url par hum ek endpoint bana rahe hai
+so Yes, you are correct. This is the basic idea behind JSON Web Tokens (JWT) authentication.
+
+
+
+//JWT
+
+Yes, that's correct. When a token expires, the user will need to authenticate again to obtain a new token. The server will typically set an expiration time for the token and the client (front-end) should handle refreshing or requesting a new token when it is close to expiring.
+
+When the user logs in, the server generates a JWT token with a secret key and a payload containing information about the user (such as the user's id or username). This token is then sent back to the client, usually in a cookie or in the response body.
+
+On subsequent requests, the client includes the JWT token in the request headers or cookies. The server then verifies the token by checking the signature using the secret key and decoding the payload. If the token is valid, the server can use the information in the payload to identify the user and grant access to protected resources or APIs. If the token is not valid or has expired, the server can deny access to the client. soon as i click ,a request will be send to mongodb in which we will send the id of that particular product in the endpoint,the mongodb will extract that id and search for the product in it's database,if found it returns us with the info
+
+
+//suno ab adding item into cart, already explained somewhere
+
+//NOW JAB ADD TOO CART KARE TO VO BADGE ME BHI SHOW HOJAAYE
+so for that we are using Context api in which we are saving user'value who is currently logged in so that we can do user.cart and extract all the products and complete our badge
+
+
+//now we are making a seperate endpoint for cartdetails as we want ki jab bhi hum bunoy ke page par jjaye to useEffect me we would call and api,and authenticate user along with it
+else we already have user info in account ,we could have directly extracted cart details of that particular user from account but since we have to do authnetication on evevry page ,we do this
+
+//NOW 1 PROBLEM WAS WHENEVER I OPEN THE FRONT PAGE,IT DOES NOT SHOW ANY USER IT'S ONLY AFTER CLICKING ADDING AN ITEM ON CART IT SHOWS ,SO TO FIX THIS
+//basically router me ek vaild user waali api banai hai so frontend(navbar.js) par useEffect me isko call karednge
+
+WHEN WE ARE DELETING AN ITEM FROM THE CART
+make sure that jab delete karu to buynow waale page par getdata dobara call ho jaaye isiliye i will send it also as a prop
+aur usko as a prop pass karwaane ke liye ,useEffect ke bahaar likhna padega
+
+//AFTER THAT WE ARE BUILDING A HAMBURGER MENU
+ans adding search bar functionality and logout
+
+
+
+//PROJECT IS COMPLETE CONGRATULATIONS
+deployment will do later ,now in mernstack just completement of whatsapp is left

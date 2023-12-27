@@ -6,6 +6,7 @@ const User = require('../models/userSchema');
 const bcrypt = require("bcryptjs");
 const authenticate = require('../middleware/authenticate');
 
+const stripe=require("stripe")("sk_test_51ORrsYSDu5hfD3NQ8uWcC4VgxhmsMWVTPbSkzgoEkm5KrHoCn0QIYjjv4A7EsgTEpeyEXcWIIDO6k5IZ1poFPKnD007mt5E58Q")
 
 
 //get product data
@@ -48,7 +49,7 @@ router.get("/getproductsone/:id", async (req, res) => {
 //signing up users
 
 router.post("/register", async (req, res) => {
-    //   console.log(req.body);
+    //   console.log(req.body); 
 
     //performing validations
     const { fname, email, mobile, password, cpassword } = req.body;
@@ -62,9 +63,9 @@ router.post("/register", async (req, res) => {
         const preuser = await User.findOne({ email: email });
 
         if (preuser) {
-            res.status(422).json({ error: "This email is already exist" });
+            res.status(423).json({ error: "This email is already exist" });
         } else if (password !== cpassword) {
-            res.status(422).json({ error: "password are not matching" });;
+            res.status(424).json({ error: "password are not matching" });;
         } else {
 
             const finaluser = new User({
@@ -87,7 +88,7 @@ router.post("/register", async (req, res) => {
 
     } catch (error) {
         console.log("Error while user registration" + error.message);
-        res.status(422).send(error);
+        res.status(425).send(error);
     }
 
 
@@ -253,6 +254,41 @@ router.get("/logout", authenticate, async (req, res) => {
 
     }
 })
+
+//checkout api
+router.post("/create_checkout_session", async (req, res) => {
+    let { products } = req.body;
+ 
+   if (!Array.isArray(products)) {
+    products = [products];
+}
+
+    const lineItems = products.map((product) => ({
+        price_data: {
+            currency: "inr",
+            product_data: {
+                name: product.title.longTitle,
+            },
+            unit_amount: product.price.cost * 100,
+        },
+        quantity: 1
+    }));
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        shipping_address_collection: {
+            allowed_countries: ['IN'], // Restrict shipping to specific countries if needed
+        },
+        mode: "payment",
+        success_url: "http://localhost:3000/success",
+        cancel_url: "http://localhost:3000/cancel",
+    });
+
+    res.json({ id: session.id });
+});
+
+
 
 
 

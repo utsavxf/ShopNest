@@ -1,14 +1,17 @@
 import { Divider } from '@mui/material';
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom';
 import "./signup.css";
 import logo from '../../images/blacklogoamazon.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Logincontext } from '../context/ContextProvider';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
+
+  const {account,setAccount}=useContext(Logincontext) 
 
 
   const [udata, setUdata] = useState({
@@ -19,6 +22,7 @@ const Signup = () => {
     cpassword: ""
   })
 
+  const navigate=useNavigate();
 
   const adddata = (e) => {
     const { name, value } = e.target;
@@ -57,15 +61,35 @@ const Signup = () => {
     // console.log(data);
 
     if (res.status === 422 || !data) {
-      toast.error("Invalid Details 👎!", {
+      toast.info("Fill all the details 😊!", {
         position: "top-center"
       });
-    } else {
+    } 
+    else 
+    if (res.status === 423 || !data) {
+      toast.info("This Email already exists 😀!", {
+        position: "top-center"
+      });
+    } 
+    else 
+    if (res.status === 424 || !data) {
+      toast.dark("Passwords do not match 😐!", {
+        position: "top-center"
+      });
+    } 
+    else 
+    if (res.status === 425 || !data) {
+      toast.dark("Error while registering the user 😥!", {
+        position: "top-center"
+      });
+    } 
+    else {
       // alert("data successfully added")
       toast.success("Registration Successfully done 😃!", {
         position: "top-center"
       });
       setUdata({ ...udata, fname: "", mobile: "", password: "", email: "", cpassword: "" });
+      navigate("/login")
     }
 
 
